@@ -7,7 +7,7 @@ require("dotenv").config()
 const url = process.env.MONGO_URI
 const swaggerDocumentations = require('./routes/documentations')
 const swaggerDocs = require('swagger-ui-express')
-const cors = require("cors")
+
 
 
 // Require the Routes
@@ -44,7 +44,7 @@ app.use(express.urlencoded({extended:true}))
 app.use('/docs',swaggerDocs.serve)
 app.use('/docs',swaggerDocs.setup(swaggerDocumentations))
 app.set("view engine", "ejs")
-app.use(cors())
+
 
 
 // routes
