@@ -13,7 +13,7 @@ const swaggerDocs = require('swagger-ui-express')
 // Require the Routes
 const userRoute = require("./routes/userRoute")
 const formRoute = require("./routes/formRoute")
-
+const pageRoute = require("./routes/pageRoute")
 
 
 // Port and Server
@@ -44,9 +44,11 @@ app.use(express.urlencoded({extended:true}))
 app.use('/docs',swaggerDocs.serve)
 app.use('/docs',swaggerDocs.setup(swaggerDocumentations))
 app.set("view engine", "ejs")
+app.use(express.static("public"))
 
 
 
 // routes
+app.use(pageRoute)
 app.use(userRoute)
-app.use("/api/form",formRoute)
+app.use("/api/form", formRoute)
