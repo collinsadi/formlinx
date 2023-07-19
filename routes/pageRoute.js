@@ -9,6 +9,18 @@ router.get("/", (request, response) => {
 })
 
 
+router.get("/dashboard", (request, response) => {
+
+    const token = request.set 
+
+    if (!token) {
+            response.render("join")
+
+        return
+    }
+    
+})
+
 
 
 
