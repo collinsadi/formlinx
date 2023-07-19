@@ -146,5 +146,22 @@ const thankyoupage = async (request, response) => {
 }
 
 
+const getuserforms = async (request, response) => {
+    
+    const owner = request.user._id
 
-module.exports = {newForm, sendForm,thankyoupage}
+    try {
+
+        const forms = await Form.find({owner})
+        
+        response.status(200).json({status:"success",forms})
+
+    } catch (error) {
+        
+        response.status(500).json({status:"error", message:"Internal Server Error"})
+        console.log(error)
+    }
+}
+
+
+module.exports = {newForm, sendForm,thankyoupage,getuserforms}

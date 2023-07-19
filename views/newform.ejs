@@ -22,9 +22,9 @@
 
         <div class="side-bar-buttons">
 
-            <a href=""><p class="active-side">Forms</p></a>
-            <a href=""><p>Account</p></a>
-            <a href=""><p>Settings</p></a>
+            <a href="/dashboard"><p class="active-side">Forms</p></a>
+            <a href="/dashboard/account"><p>Account</p></a>
+            <a href="/dashboard/settings"><p>Settings</p></a>
 
         </div>
 
@@ -40,7 +40,7 @@
 
         <div class="section-title">
 
-            <p>Forms</p>
+            <p>New Form</p>
 
             <div class="side-bar-toggle">
                 <div class="bar"></div>
@@ -51,27 +51,64 @@
         </div>
 
         
-        <div class="form-container">
+        <div class="form-container" id="form-container" >
             <div class="form-group">
-             <input placeholder="Form Name" type="text">
-            <input placeholder="Email" type="text">
+             <input id="formname" placeholder="Form Name" type="text">
+            <input id="email" placeholder="Email" type="text">
             </div>
            
-            <input placeholder="Confirm Email" type="text">
-            <input placeholder="Return Url" type="text">
-            <input placeholder="Fail Url" type="text">
-            <input placeholder="Thank You Page Title" type="text">
-            <input placeholder="Thank You Page Message" type="text">
-            <input placeholder="Thank You Page Return Text" type="text">
+            <div class="form-group">
 
-            <div class="submit-button">
-                <button>Create</button>
+                <input id="cemail" placeholder="Confirm Email" type="text">
+            <input id="returnurl" placeholder="Return Url" type="text">
             </div>
 
+            <div class="form-group">
+
+                <input id="failurl" placeholder="Fail Url" type="text">
+            <input id="typt" placeholder="Thank You Page Title" type="text">
+            </div>
+            <div class="form-group">
+
+ <input id="returntext" placeholder="Thank You Page Return Text" type="text">
+            <input id="typm" placeholder="Thank You Page Message" type="text">
+
+            </div>
+            
+           
+
+            <div class="submit-button">
+                <button id="create">Create</button>
+            </div>
+
+            <p style="margin-top: 10px;" id="error">Error Tracker</p>
         </div>
 
+        <div id="form-url-sect" class="form-container">
+
+            <div style="width: 100%;" class="input">
+                <input id="form-code-url" type="text">
+                <span id="copy-code">copy</span>
+            </div>
+
+            <div class="code-snippet">
+
+
+      <textarea name="" id="codesnippet" cols="30" rows="10">
+                
+            </textarea>
+            
+            <span id="copy-snippet">copy</span>
+
+            </div>
+
+      
+
+        </div>
        
     </main>
+
+    <script src="/scripts/newform.js"></script>
     
 </body>
 </html>

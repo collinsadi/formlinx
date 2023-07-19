@@ -19,11 +19,11 @@
             <h3>FORMLINX</h3>
         </div>
 
-        <div class="side-bar-buttons">
+       <div class="side-bar-buttons">
 
-            <a href=""><p class="active-side">Forms</p></a>
-            <a href=""><p>Account</p></a>
-            <a href=""><p>Settings</p></a>
+            <a href="/dashboard"><p class="active-side">Forms</p></a>
+            <a href="/dashboard/account"><p>Account</p></a>
+            <a href="/dashboard/settings"><p>Settings</p></a>
 
         </div>
 
@@ -66,23 +66,16 @@
 
                 <tr>
                     <th>Name</th>
-                    <th>Email</th>
+                    <th>Code</th>
                     <th>Submisions</th>
                     <th>Action</th>
                     <th>Action</th>
                     <th>Action</th>
                 </tr>
 
-                <tbody>
+                <tbody id="form-table">
 
-                    <tr>
-                        <td>Application Form</td>
-                        <td>teckhardy@gmail.com</td>
-                        <td>50</td>
-                        <td> <button class="disable">Disable</button> </td>
-                        <td> <button class="delete">Delete</button> </td>
-                        <td> <a href=""> <button class="manage">Manage</button></a> </td>
-                    </tr>
+                  
 
 
                 </tbody>
@@ -98,5 +91,7 @@
        
     </main>
     
+
+    <script src="/scripts/getforms.js"></script>
 </body>
 </html>

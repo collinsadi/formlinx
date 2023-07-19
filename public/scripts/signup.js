@@ -158,7 +158,7 @@ const verifyEmail = async () => {
 
         setTimeout(() => {
             localStorage.clear()
-        location.reload()
+        window.location.href = "/dashboard"
         }, 1000);
 
         
