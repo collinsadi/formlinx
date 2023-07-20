@@ -1,6 +1,8 @@
 const formsTable = document.getElementById("form-table")
 const modal = document.getElementById("success-modal")
 const modalcontent = document.getElementById("modal-message")
+const modaltitle = document.getElementById("message-title")
+
 
 
 const getforms = async () => {
@@ -25,7 +27,7 @@ const getforms = async () => {
                         <td>${x.submissions}</td>
 
                         ${x.deactivated ? `
-                        <td> <button data-formid=${x._id} class="manage">Enable</button> </td>` : `
+                        <td> <button onclick="activateForm(this)" data-formurl=${x.formUrl}  class="manage">Enable</button> </td>` : `
                         <td> <button onclick="deactivateForm(this)" data-formurl=${x.formUrl} class="disable">Disable</button> </td>
 `}
 
@@ -53,8 +55,6 @@ const deactivateForm = async (button) => {
 
     const url = button.dataset.formurl
 
-    alert(url)
-
     const response = await fetch("/api/form/user/forms/deactivate?form=" + url, {
         method: "POST",
         headers: {
@@ -68,7 +68,61 @@ const deactivateForm = async (button) => {
     if (response.ok) {
         modal.style.display = "block"
         modalcontent.innerHTML = data.message
+        
+        setTimeout(() => {
+            location.reload()
+        }, 100);
     }
+
+    if(data.status === "error"){
+
+         modal.style.display = "block"
+        modalcontent.innerHTML = data.message
+        modaltitle.innerHTML = "Error!"
+        modaltitle.style.color = "red"
+        modalcontent.style.color = "red"
+
+    }
+}
+
+
+const activateForm = async (button) => {
+    
+      const url = button.dataset.formurl
+
+    const response = await fetch("/api/form/user/forms/deactivate?form=" + url, {
+        method: "POST",
+        headers: {
+            "content-type":"application/json"
+        },
+        body: JSON.stringify({action:"activate"})
+    })
+    
+    const data = await response.json()
+
+    if (response.ok) {
+        modal.style.display = "block"
+        modalcontent.innerHTML = data.message
+        setTimeout(() => {
+            location.reload()
+        }, 100);
+    }
+
+    if(data.status === "error"){
+
+         modal.style.display = "block"
+        modalcontent.innerHTML = data.message
+        modaltitle.innerHTML = "Error!"
+        modaltitle.style.color = "red"
+        modalcontent.style.color = "red"
+
+    }
+
+}
+
+
+const closeModal = () => {
+    modal.style.display = "none"
 }
 
 getforms()

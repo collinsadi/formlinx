@@ -198,7 +198,7 @@ const deactivateform = async (request, response) => {
                 
                 await form.save()
 
-                response.status(200).json({status:"error", message:"Form Deactivated Successfully"})
+                response.status(200).json({status:"success", message:"Form Deactivated Successfully"})
 
             }catch(error){
                 response.status(400).json({status:"error", messsage:"Bad Request"})
@@ -225,7 +225,7 @@ const deactivateform = async (request, response) => {
                 
                 await form.save()
 
-                response.status(200).json({status:"error", message:"Form Activated Successfully"})
+                response.status(200).json({status:"success", message:"Form Activated Successfully"})
 
             }catch(error){
                 response.status(400).json({status:"error", messsage:"Bad Request"})
