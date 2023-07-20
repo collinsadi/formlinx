@@ -2,6 +2,7 @@ const express = require("express")
 const app = express()
 const mongoose = require("mongoose")
 const morgan = require("morgan")
+const cookieparser = require("cookie-parser")
 require("dotenv").config()
 
 const url = process.env.MONGO_URI
@@ -45,7 +46,7 @@ app.use('/docs',swaggerDocs.serve)
 app.use('/docs',swaggerDocs.setup(swaggerDocumentations))
 app.set("view engine", "ejs")
 app.use(express.static("public"))
-
+app.use(cookieparser())
 
 
 // routes

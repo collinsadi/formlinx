@@ -1,5 +1,37 @@
 const express = require("express")
 const router = express.Router()
+const jwt = require("jsonwebtoken")
+require("dotenv").config()
+const jwtsecret = process.env.JWT_SECRET
+
+
+  const authMiddleWare = async (req, res, next) =>{
+
+    const token = req.cookies.token;
+
+    if(!token) {
+
+        // res.status(401).json({ message: 'Unauthorized'})
+
+        res.render("join")
+        return;
+    }
+
+
+    try {
+
+        const decoded = await jwt.verify(token, jwtsecret)
+        req.user = decoded.user
+        next()
+    } catch (error) {
+        return res.render('join')
+    }
+
+
+
+
+}
+
 
 
 router.get("/", (request, response) => {
@@ -9,16 +41,17 @@ router.get("/", (request, response) => {
 })
 
 
-router.get("/dashboard", (request, response) => {
+router.get("/dashboard",authMiddleWare, (request, response) => {
 
-    const token = request.set 
+  response.send("HELLO")
 
-    if (!token) {
-            response.render("join")
-
-        return
-    }
+   
     
+})
+
+router.get("/login", (request, response) => {
+    
+    response.render("login")
 })
 
 

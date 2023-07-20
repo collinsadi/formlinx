@@ -61,7 +61,7 @@ const signUp = expressAsyncHandler(async (request, response) => {
 
             sendEmail(email,"Email Verification",`use this code to Validate Your Email Address <h3>${validation}</h3>`)
 
-            response.status(200).json({status:"success", message:"Sign Up Successful, Please Verify Your Email Address"})
+            response.status(200).json({status:"success", message:"Sign Up Successful, Please Verify Your Email Address",email})
 
 
 
@@ -115,6 +115,8 @@ const verifyEmail = expressAsyncHandler(async (request, response) => {
 
             
             const token = jwt.sign({ user }, jwtsecret)
+
+            response.cookie("token", token, {httpOnly: true});
 
             user.token = token
 
