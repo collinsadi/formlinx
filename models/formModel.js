@@ -36,6 +36,11 @@ const formSchema = new Schema({
         type: String,
         required: true
     },
+    submissions: {
+        type: Number,
+        default: 0
+       
+    },
     owner: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "user"

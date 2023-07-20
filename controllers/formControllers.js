@@ -104,7 +104,11 @@ const sendForm = async (request, response)=>{
             message += `<h4>${key}: ${value}</h4>`
         })
         
-        sendEmail(email,title,message)
+        sendEmail(email, title, message)
+        
+        form.submissions += 1
+
+        await form.save()
 
         response.redirect(`/api/form/thanks?form=${formId}`)
 
