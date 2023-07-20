@@ -43,7 +43,7 @@ router.get("/", (request, response) => {
 
 router.get("/dashboard",authMiddleWare, (request, response) => {
 
-  response.send("HELLO")
+  response.render("dashboard")
 
    
     
@@ -72,6 +72,11 @@ router.get("/auth/login/password/reset", (request, response) => {
 
     response.render("resetpassword")
 
+})
+
+router.get("/dashboard/forms/new", authMiddleWare, (request, response) => {
+    
+    response.render("newform")
 })
 
 
