@@ -32,8 +32,8 @@ const getforms = async () => {
 `}
 
 
-                        <td> <button data-formid=${x._id} class="delete">Delete</button> </td>
-                        <td><button class="manage">Copy Url</button></td>
+                        <td> <button data-formurl=${x.formUrl} class="delete">Delete</button> </td>
+                        <td><button  data-formurl=${x.formUrl}  onclick="copyurl(this)" class="manage">Copy Url</button></td>
                     </tr>
 
             
@@ -118,6 +118,14 @@ const activateForm = async (button) => {
 
     }
 
+}
+
+const copyurl = async (button) => {
+       const url = button.dataset.formurl
+
+    await navigator.clipboard.writeText(url)
+
+    button.innerHTML = "Copied"
 }
 
 
