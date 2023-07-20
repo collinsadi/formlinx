@@ -57,7 +57,7 @@ const signup = async () => {
         
     }
 
-    console.log(data)
+   
 }
 
 

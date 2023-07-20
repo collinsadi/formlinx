@@ -49,7 +49,7 @@ const response = await fetch("/users/password/reset", {
 
 changePasswordButton.addEventListener("click", (e) => {
 
-  console.log(token)
+ 
     
     if (!token) {
         emailerror.innerHTML = "Token Not Found"

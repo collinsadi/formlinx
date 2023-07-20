@@ -64,7 +64,7 @@ const login = async () => {
         
     }
 
-    console.log(data)
+   
 }
 
 

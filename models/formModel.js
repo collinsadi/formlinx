@@ -41,6 +41,11 @@ const formSchema = new Schema({
         default: 0
        
     },
+    deactivated: {
+        type: Boolean,
+        default: false
+       
+    },
     owner: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "user"

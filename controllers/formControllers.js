@@ -92,6 +92,12 @@ const sendForm = async (request, response)=>{
             response.status(404).json({status:"error", message:"Form Was Not Found"})
             return
         } 
+
+        if (form.deactivated) {
+            
+            response.render("404")
+            return
+        }
         
         const email = form.email
         const title = `New Submission From ${form.formName}`
@@ -167,5 +173,79 @@ const getuserforms = async (request, response) => {
     }
 }
 
+const deactivateform = async (request, response) => {
 
-module.exports = {newForm, sendForm,thankyoupage,getuserforms}
+    const formUrl = request.query.form
+    const action = request.body.action
+
+
+    try{
+
+        if (action === "deactivate") {
+        
+            
+            try {
+                
+                const form = await Form.findOne({ formUrl })
+                
+                if(!form){
+
+                    response.status(404).json({status:"error", message:"Form Not Found"})
+                    return
+                }
+
+                form.deactivated = true
+                
+                await form.save()
+
+                response.status(200).json({status:"error", message:"Form Deactivated Successfully"})
+
+            }catch(error){
+                response.status(400).json({status:"error", messsage:"Bad Request"})
+                console.log(error)
+            }
+
+            return
+
+    }
+        if (action === "activate") {
+        
+            
+            try {
+                
+                const form = await Form.findOne({ formUrl })
+                
+                if(!form){
+
+                    response.status(404).json({status:"error", message:"Form Not Found"})
+                    return
+                }
+
+                form.deactivated = false
+                
+                await form.save()
+
+                response.status(200).json({status:"error", message:"Form Activated Successfully"})
+
+            }catch(error){
+                response.status(400).json({status:"error", messsage:"Bad Request"})
+                console.log(error)
+            }
+
+            return
+
+    }
+
+
+        response.status(422).json({status:"error", message:"Action Type Not Recognized"})
+
+    } catch(error){
+
+        response.status(500).json({status:"error", message:"Internal Server Error"})
+        console.log(error)
+    }
+
+}
+
+
+module.exports = {newForm, sendForm,thankyoupage,getuserforms,deactivateform}
