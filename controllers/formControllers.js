@@ -125,7 +125,7 @@ const sendForm = async (request, response)=>{
 const thankyoupage = async (request, response) => {
 
     const formId = request.query.form
-    const formUrl = `http://8000/api/form/${formId}`
+    const formUrl = `https://formlinx.onrender.com/api/form/${formId}`
 
     try {
 
