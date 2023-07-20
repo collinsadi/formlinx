@@ -52,7 +52,7 @@ const   newForm = async (request, response) => {
 
 
             const formid = await shortid.generate()
-            const formUrl = `http://8000/api/form/${formid}`
+            const formUrl = `https://formlinx.onrender.com/api/form/${formid}`
     
             const form = await Form.create({ formName, email, returnUrl, failUrl, thankYouPage_headline, thankYouPage_message, thankYouPage_returnText, owner,formUrl })
 
@@ -81,7 +81,7 @@ const sendForm = async (request, response)=>{
     const values = Object.values(request.body)
 
 
-    const formUrl = `http://8000/api/form/${formId}`
+    const formUrl = `https://formlinx.onrender.com/api/form/${formId}`
    
     try {
 

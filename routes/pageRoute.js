@@ -54,7 +54,25 @@ router.get("/login", (request, response) => {
     response.render("login")
 })
 
+router.get("/signup", (request, response) => {
+    
+    response.render("join")
 
+})
+
+router.get("/auth/login/password/reset", (request, response) => {
+
+    const token = request.query.passwordresettoken
+
+    if (!token) {
+        
+        response.redirect("/login")
+        return
+    }
+
+    response.render("resetpassword")
+
+})
 
 
 module.exports = router

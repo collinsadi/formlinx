@@ -145,6 +145,13 @@ const verifyEmail = async () => {
 
     const data = await response.json()
 
+     if(data.status === "error"){
+
+    emailerror.innerHTML = data.message
+    emailerror.style.color = "red"
+
+    }
+
     if (response.ok) {
         emailerror.innerHTML = data.message
         emailerror.style.color = "green"

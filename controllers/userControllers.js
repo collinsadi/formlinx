@@ -110,7 +110,7 @@ const verifyEmail = expressAsyncHandler(async (request, response) => {
 
             }
 
-            user.validation = null
+            user.validation = undefined
             user.activated = true
 
             
@@ -181,12 +181,14 @@ const logIn = expressAsyncHandler(async (request, response) => {
 
             sendEmail(email,"Email Verification",`use this code to Validate Your Email Address <h3>${validation}</h3>`)
 
-            response.status(401).json({status:"error", message:"Please Validate your Email and Try Again"})
+            response.status(401).json({status:"error", message:"Please Validate your Email and Try Again",email})
             return
         }
         user.logged = true
 
         await user.save()
+
+        response.cookie("token", user.token, {httpOnly: true});
 
         response.status(200).json({status:"success", message:"Logged In Successfully",firstName:user.firstName, lastName: user.lastName, token:user.token})
 
@@ -223,17 +225,17 @@ const forgottenPassword = expressAsyncHandler(async (request, response) => {
             
             user.validation = validation
 
-            await user.save()
+            await user.save()  
 
-        const sendToken = sendEmail(email, "Password Reset", `use this code to Reset Your Password <h3>${validation}</h3>`)
+        const sendToken = sendEmail(email, "Password Reset", `You Requested for a Password Reset, this Token is Valid for Only 5 Minutes <br> <h3><a href="https://formlinx.onrender.com/auth/login/password/reset?passwordresettoken=${validation}"> Reset Password </a></h3>`)
         
-        if (!sendToken) {
+        // if (!sendToken) {
             
-            response.status(422).json({status:"error",message:"Could Not Send Token"})
-            return
-        }
+        //     response.status(422).json({status:"error",message:"Could Not Send Token"})
+        //     return
+        // }
 
-        response.status(200).json({status:"success",message:"Password Reset Token Sent"})
+        response.status(200).json({status:"success",message:"Password Reset Token Sent",email})
 
     } catch (error) {
         
@@ -246,17 +248,10 @@ const forgottenPassword = expressAsyncHandler(async (request, response) => {
 
 const resetPassword = expressAsyncHandler(async (request, response) => { 
 
-    const { email, token, newPassword } = request.body
+    const { token, newPassword } = request.body
 
 
     try {
-        
-            if (!email) {
-
-            response.status(422).json({status:"error",message:"email is missing"})
-            return
-                
-            }
             if (!token) {
 
             response.status(422).json({status:"error",message:"token Missing"})
@@ -270,11 +265,11 @@ const resetPassword = expressAsyncHandler(async (request, response) => {
                 
         }
         
-        const user = await User.findOne({ email })
+        const user = await User.findOne({ validation:token })
         
         if (!user) {
             
-            response.status(401).json({status:"error",message:"Invalid Credentials"})
+            response.status(401).json({status:"error",message:"Invalid Token"})
             return
         }
         
@@ -287,12 +282,14 @@ const resetPassword = expressAsyncHandler(async (request, response) => {
         if (!user.activated) {
             
             user.activated = true
+            const token = jwt.sign({ user }, jwtsecret)
+            user.token = token
         }
         
         const hashedPassword = await bcrypt.hash(newPassword, 10)
         
         user.password = hashedPassword
-        user.validation = null
+        user.validation = undefined
 
         await user.save()
 
