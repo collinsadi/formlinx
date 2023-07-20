@@ -33,6 +33,10 @@ const getforms = async () => {
 
     }
 
+    if (data.forms && data.forms.length === 0) {
+       formsTable.innerHTML = "You Dont Have any Active Form"  
+     }
+
     console.log(data)
 
 }
