@@ -53,3 +53,11 @@ app.use(cookieparser())
 app.use(pageRoute)
 app.use(userRoute)
 app.use("/api/form", formRoute)
+
+
+
+// 404 page
+
+app.use((request, response) => {
+    response.status(404).render("404")
+})
