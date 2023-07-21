@@ -32,7 +32,7 @@ const getforms = async () => {
 `}
 
 
-                        <td> <button data-formurl=${x.formUrl} class="delete">Delete</button> </td>
+                        <td> <button data-formurl=${x.formUrl}  onclick="ShowWarning(this)" class="delete">Delete</button> </td>
                         <td><button  data-formurl=${x.formUrl}  onclick="copyurl(this)" class="manage">Copy Url</button></td>
                     </tr>
 
@@ -129,8 +129,62 @@ const copyurl = async (button) => {
 }
 
 
+const ShowWarning = async (button) => {
+
+      const url = button.dataset.formurl
+
+    const warningmodal = document.getElementById("warningModal")
+    const btn = document.getElementById("delete-button")
+
+    warningmodal.style.display = "block"
+
+    btn.setAttribute("data-formurl", url)
+}
+
+
+const deleteForm = async (button) => {
+      const url = button.dataset.formurl
+
+    const response = await fetch("/api/form/user/forms/delete?form=" + url, {
+        method: "POST",
+        headers: {
+            "content-type":"application/json"
+        }
+    })
+    
+    const data = await response.json()
+
+    if (response.ok) {
+        modal.style.display = "block"
+        modalcontent.innerHTML = data.message
+        setTimeout(() => {
+            location.reload()
+        }, 100);
+    }
+
+    if(data.status === "error"){
+
+         modal.style.display = "block"
+        modalcontent.innerHTML = data.message
+        modaltitle.innerHTML = "Error!"
+        modaltitle.style.color = "red"
+        modalcontent.style.color = "red"
+
+    }
+
+}
+
+
 const closeModal = () => {
     modal.style.display = "none"
+}
+
+const closeWarning = () => {
+    
+    const warningmodal = document.getElementById("warningModal")
+
+    warningmodal.style.display = "none"
+
 }
 
 getforms()

@@ -177,7 +177,7 @@ const deactivateform = async (request, response) => {
 
     const formUrl = request.query.form
     const action = request.body.action
-
+     const owner = request.user._id
 
     try{
 
@@ -191,6 +191,11 @@ const deactivateform = async (request, response) => {
                 if(!form){
 
                     response.status(404).json({status:"error", message:"Form Not Found"})
+                    return
+                }
+
+                if (form.owner != owner) {
+                    response.status(401).json({status:"error", message:"Unauthorized Request"})
                     return
                 }
 
@@ -221,6 +226,11 @@ const deactivateform = async (request, response) => {
                     return
                 }
 
+                if (form.owner != owner) {
+                    response.status(401).json({status:"error", message:"Unauthorized Request"})
+                    return
+                }
+
                 form.deactivated = false
                 
                 await form.save()
@@ -247,5 +257,28 @@ const deactivateform = async (request, response) => {
 
 }
 
+const deleteForm = async (request, response) => {
+    const formUrl = request.query.form
+      const owner = request.user._id
 
-module.exports = {newForm, sendForm,thankyoupage,getuserforms,deactivateform}
+    try {
+        
+        const form = await Form.findOne({ formUrl })
+        
+        if (form.owner != owner) {
+        response.status(401).json({status:"error", message:"Unauthorized Request"})
+        return
+            }
+
+        await Form.findOneAndDelete({formUrl})
+
+        response.status(200).json({status:"success", message:"Form Deleted"})
+
+    } catch (error) {
+        console.log(error)
+        response.status(500).json({status:"error", message:"internal server error"})
+    }
+}
+
+
+module.exports = {newForm, sendForm,thankyoupage,getuserforms,deactivateform,deleteForm}
