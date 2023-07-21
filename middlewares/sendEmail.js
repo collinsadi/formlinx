@@ -10,8 +10,8 @@ const sendEmail = (email,subject,html)=>{
 
         service: "gmail",
         auth: {
-            user: "collinsadi20@gmail.com",
-            pass:"sauxvjsakeriedqw"
+            user: "formlinx@gmail.com",
+            pass:"izfztecninjrzrvc"
         }
     })
         
